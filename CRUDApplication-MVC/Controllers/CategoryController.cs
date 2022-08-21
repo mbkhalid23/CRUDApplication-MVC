@@ -17,5 +17,11 @@ namespace CRUDApplication_MVC.Controllers
             var objCategoryList = _db.Categories.ToList();
             return View(objCategoryList);
         }
+
+        //GET
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
