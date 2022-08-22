@@ -1,4 +1,5 @@
 ﻿using CRUDApplication_MVC.Data;
+using CRUDApplication_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRUDApplication_MVC.Controllers
@@ -22,6 +23,24 @@ namespace CRUDApplication_MVC.Controllers
         public IActionResult Create()
         {
             return View();
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Category obj)
+        {
+            if (obj.DisplayOrder <= 0)
+            {
+                ModelState.AddModelError("DisplayOrder", "Display Order must be a non-zero positive integer");
+            }
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
         }
     }
 }
